@@ -71,7 +71,7 @@ class AuthRepository implements IAuthRepository {
   }) {
     return ApiClient.request(
       path: ApiConstants.sendOtp,
-      body: request.toJson(),
+      body: FormData.fromMap(request.toJson()),
     );
   }
 }
