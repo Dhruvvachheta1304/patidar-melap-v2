@@ -1,41 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:patidar_melap_app/app/enum.dart';
-import 'package:patidar_melap_app/app/helpers/extensions/extensions.dart';
-import 'package:patidar_melap_app/app/theme/spacing.dart';
 
-/// This class is used for implementing the Buttons throughout the App
-/// This button contains most of the parameters weather a user wants to
-/// show a button with icons inside it or just text type.
-///
-/// To change the look of Button, use the [ButtonType] argument in the
-/// constructor.
 class AppButton extends StatelessWidget {
   const AppButton({
+    super.key,
     required this.text,
     required this.onPressed,
     this.isEnabled = true,
-    this.isExpanded = false,
-    this.buttonType = ButtonType.elevated,
-    this.buttonStyle,
+    this.isExpanded = true,
     this.textStyle,
     this.padding,
     this.contentPadding,
-    this.icon,
-    this.iconPadding,
-    super.key,
+    this.buttonColor,
+    this.defaultTextColor,
+    this.borderRadius,
+    this.isOutline = false,
+    this.borderColor,
+    this.gradientColors,
   });
 
   final String text;
   final bool isEnabled;
   final bool isExpanded;
-  final ButtonType buttonType;
   final VoidCallback? onPressed;
-  final ButtonStyle? buttonStyle;
   final TextStyle? textStyle;
   final EdgeInsets? padding;
   final EdgeInsets? contentPadding;
-  final Widget? icon;
-  final EdgeInsets? iconPadding;
+  final Color? buttonColor;
+  final Color? defaultTextColor;
+  final double? borderRadius;
+  final bool isOutline;
+  final Color? borderColor;
+  final List<Color>? gradientColors;
 
   @override
   Widget build(BuildContext context) {
@@ -44,201 +39,24 @@ class AppButton extends StatelessWidget {
       enabled: isEnabled,
       button: true,
       label: text,
-      child: Container(
-        width: isExpanded ? Insets.infinity : null,
-        padding: padding ??
-            const EdgeInsets.symmetric(
-              horizontal: Insets.medium,
-            ),
-        child: _ButtonType(
+      child: SizedBox(
+        width: isExpanded ? double.maxFinite : null,
+        child: _ButtonContent(
           text: text,
-          buttonType: buttonType,
-          icon: icon,
           isEnabled: isEnabled,
           isExpanded: isExpanded,
           onPressed: onPressed,
-          buttonStyle: buttonStyle,
-          iconPadding: iconPadding,
           contentPadding: contentPadding,
           textStyle: textStyle,
+          borderRadius: borderRadius,
+          buttonColor: buttonColor,
+          defaultTextColor: defaultTextColor ?? Colors.white,
+          isOutline: isOutline,
+          borderColor: borderColor,
+          gradientColors: gradientColors,
         ),
       ),
     );
-  }
-}
-
-class _ButtonType extends StatelessWidget {
-  const _ButtonType({
-    required this.text,
-    required this.buttonType,
-    required this.icon,
-    this.isEnabled = true,
-    this.isExpanded = false,
-    this.onPressed,
-    this.buttonStyle,
-    this.iconPadding,
-    this.contentPadding,
-    this.textStyle,
-  });
-
-  final bool isEnabled;
-  final VoidCallback? onPressed;
-  final ButtonStyle? buttonStyle;
-  final EdgeInsets? iconPadding;
-  final EdgeInsets? contentPadding;
-  final String text;
-  final TextStyle? textStyle;
-  final bool isExpanded;
-  final ButtonType buttonType;
-  final Widget? icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final iconWithPadding = Padding(
-      padding: iconPadding ??
-          const EdgeInsets.fromLTRB(
-            Insets.xxsmall,
-            Insets.medium,
-            Insets.zero,
-            Insets.medium,
-          ),
-      child: icon,
-    );
-    final primaryColor = context.colorScheme.primary;
-    final secondaryColor = context.colorScheme.secondary;
-    final onPrimaryColor = context.colorScheme.onPrimary;
-
-    return switch (buttonType) {
-      ButtonType.elevated when icon != null => ElevatedButton.icon(
-          onPressed: isEnabled ? onPressed : null,
-          style: buttonStyle,
-          icon: iconWithPadding,
-          label: _ButtonContent(
-            contentPadding: contentPadding,
-            isEnabled: isEnabled,
-            text: text,
-            textStyle: textStyle,
-            isExpanded: isExpanded,
-            defaultTextColor: primaryColor,
-          ),
-        ),
-      ButtonType.elevated => ElevatedButton(
-          onPressed: isEnabled ? onPressed : null,
-          style: buttonStyle,
-          child: _ButtonContent(
-            contentPadding: contentPadding,
-            isEnabled: isEnabled,
-            text: text,
-            textStyle: textStyle,
-            isExpanded: isExpanded,
-            defaultTextColor: primaryColor,
-          ),
-        ),
-      ButtonType.filled when icon != null => FilledButton.icon(
-          onPressed: isEnabled ? onPressed : null,
-          style: buttonStyle,
-          icon: iconWithPadding,
-          label: _ButtonContent(
-            contentPadding: contentPadding,
-            isEnabled: isEnabled,
-            text: text,
-            hasIcon: true,
-            textStyle: textStyle,
-            isExpanded: isExpanded,
-            defaultTextColor: onPrimaryColor,
-          ),
-        ),
-      ButtonType.filled => FilledButton(
-          onPressed: isEnabled ? onPressed : null,
-          style: buttonStyle,
-          child: _ButtonContent(
-            contentPadding: contentPadding,
-            isEnabled: isEnabled,
-            text: text,
-            textStyle: textStyle,
-            isExpanded: isExpanded,
-            defaultTextColor: onPrimaryColor,
-          ),
-        ),
-      ButtonType.tonal when icon != null => FilledButton.tonalIcon(
-          onPressed: isEnabled ? onPressed : null,
-          style: buttonStyle,
-          icon: iconWithPadding,
-          label: _ButtonContent(
-            contentPadding: contentPadding,
-            isEnabled: isEnabled,
-            text: text,
-            hasIcon: true,
-            textStyle: textStyle,
-            isExpanded: isExpanded,
-            defaultTextColor: secondaryColor,
-          ),
-        ),
-      ButtonType.tonal => FilledButton.tonal(
-          onPressed: isEnabled ? onPressed : null,
-          style: buttonStyle,
-          child: _ButtonContent(
-            contentPadding: contentPadding,
-            isEnabled: isEnabled,
-            text: text,
-            textStyle: textStyle,
-            isExpanded: isExpanded,
-            defaultTextColor: secondaryColor,
-          ),
-        ),
-      ButtonType.outlined when icon != null => OutlinedButton.icon(
-          onPressed: isEnabled ? onPressed : null,
-          style: buttonStyle,
-          icon: iconWithPadding,
-          label: _ButtonContent(
-            contentPadding: contentPadding,
-            isEnabled: isEnabled,
-            text: text,
-            hasIcon: true,
-            textStyle: textStyle,
-            isExpanded: isExpanded,
-            defaultTextColor: primaryColor,
-          ),
-        ),
-      ButtonType.outlined => OutlinedButton(
-          onPressed: isEnabled ? onPressed : null,
-          style: buttonStyle,
-          child: _ButtonContent(
-            contentPadding: contentPadding,
-            isEnabled: isEnabled,
-            text: text,
-            textStyle: textStyle,
-            isExpanded: isExpanded,
-            defaultTextColor: primaryColor,
-          ),
-        ),
-      ButtonType.text when icon != null => TextButton.icon(
-          onPressed: isEnabled ? onPressed : null,
-          style: buttonStyle,
-          icon: iconWithPadding,
-          label: _ButtonContent(
-            contentPadding: contentPadding,
-            isEnabled: isEnabled,
-            text: text,
-            hasIcon: true,
-            textStyle: textStyle,
-            isExpanded: isExpanded,
-            defaultTextColor: primaryColor,
-          ),
-        ),
-      ButtonType.text => TextButton(
-          onPressed: isEnabled ? onPressed : null,
-          style: buttonStyle,
-          child: _ButtonContent(
-            contentPadding: contentPadding,
-            isEnabled: isEnabled,
-            text: text,
-            textStyle: textStyle,
-            isExpanded: isExpanded,
-            defaultTextColor: primaryColor,
-          ),
-        ),
-    };
   }
 }
 
@@ -246,47 +64,67 @@ class _ButtonContent extends StatelessWidget {
   const _ButtonContent({
     required this.isEnabled,
     required this.text,
-    required this.defaultTextColor,
-    this.hasIcon = false,
+    required this.onPressed,
+    required this.isOutline,
+    this.defaultTextColor,
     this.textStyle,
     this.isExpanded = false,
     this.contentPadding,
+    this.buttonColor,
+    this.borderRadius,
+    this.borderColor,
+    this.gradientColors,
   });
 
   final EdgeInsets? contentPadding;
   final bool isEnabled;
   final String text;
   final TextStyle? textStyle;
-  final Color defaultTextColor;
-  final bool hasIcon;
+  final Color? defaultTextColor;
   final bool isExpanded;
+  final Color? buttonColor;
+  final VoidCallback? onPressed;
+  final double? borderRadius;
+  final bool isOutline;
+  final Color? borderColor;
+  final List<Color>? gradientColors;
 
   @override
   Widget build(BuildContext context) {
-    final defaultPadding = hasIcon
-        ? EdgeInsets.fromLTRB(
-            Insets.zero,
-            Insets.medium,
-            isExpanded ? Insets.medium * 2 : Insets.medium,
-            Insets.medium,
-          )
-        : const EdgeInsets.all(Insets.medium);
-    final defaultTextStyle = context.textTheme.bodyLarge!.copyWith(color: defaultTextColor);
-    return Container(
-      width: isExpanded ? Insets.infinity : null,
-      padding: contentPadding ?? defaultPadding,
-      child: isEnabled
-          ? Text(
-              text,
-              style: textStyle ?? defaultTextStyle,
-              textAlign: TextAlign.center,
-            )
-          : Center(
-              child: SizedBox.square(
-                dimension: textStyle?.fontSize ?? defaultTextStyle.fontSize,
-                child: const CircularProgressIndicator(),
-              ),
-            ),
+    final defaultTextStyle = TextStyle(
+      color: isOutline ? Colors.black : defaultTextColor ?? Colors.white,
+      fontSize: 16,
+    );
+
+    return ElevatedButton(
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all(EdgeInsets.zero),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius ?? 20),
+            side: isOutline ? BorderSide(color: borderColor ?? Colors.black) : BorderSide.none,
+          ),
+        ),
+        backgroundColor: MaterialStateProperty.all(Colors.transparent),
+      ),
+      onPressed: onPressed,
+      child: Container(
+        padding: contentPadding,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(borderRadius ?? 20),
+          gradient: LinearGradient(
+            colors: gradientColors ?? [Colors.red.shade500, Colors.purple],
+          ),
+          border: isOutline ? Border.all(color: borderColor ?? Colors.black) : null,
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: textStyle ?? defaultTextStyle,
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:patidar_melap_app/app/theme/app_colors.dart';
 import 'package:patidar_melap_app/app/theme/app_theme.dart';
 
-enum AppTextLevel { paragraph, title, formLabel, style16, bebas }
+enum AppTextLevel { paragraph, title, formLabel, style16, muktaVaani }
 
 class AppText extends StatelessWidget {
   const AppText(
@@ -71,7 +71,7 @@ class AppText extends StatelessWidget {
     this.fontStyle = FontStyle.normal,
   }) : level = AppTextLevel.style16;
 
-  const AppText.bebas(
+  const AppText.muktaVaani(
     this.data, {
     super.key,
     this.color = AppColors.white,
@@ -82,7 +82,7 @@ class AppText extends StatelessWidget {
     this.overflow = TextOverflow.ellipsis,
     this.textAlign = TextAlign.start,
     this.fontStyle = FontStyle.normal,
-  }) : level = AppTextLevel.bebas;
+  }) : level = AppTextLevel.muktaVaani;
 
   final String data;
   final AppTextLevel level;
@@ -109,8 +109,8 @@ class AppText extends StatelessWidget {
           return theme?.typography.formLabel;
         case AppTextLevel.style16:
           return theme?.typography.style16;
-        case AppTextLevel.bebas:
-          return theme?.typography.bebas;
+        case AppTextLevel.muktaVaani:
+          return theme?.typography.muktaVaani;
       }
     }();
     return Text(
@@ -123,7 +123,7 @@ class AppText extends StatelessWidget {
         decoration: textDecoration,
         decorationColor: theme?.colors.textColor,
         overflow: overflow,
-        fontFamily: level == AppTextLevel.bebas ? AppTheme.fontFamily : AppTheme.muktaVaani,
+        fontFamily: level == AppTextLevel.muktaVaani ? AppTheme.fontFamily : AppTheme.muktaVaani,
         fontStyle: fontStyle,
       ),
       textAlign: textAlign,

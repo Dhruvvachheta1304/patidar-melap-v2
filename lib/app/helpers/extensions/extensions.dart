@@ -5,14 +5,17 @@ import 'package:intl/intl.dart';
 import 'package:patidar_melap_app/app/enum.dart';
 import 'package:patidar_melap_app/app/helpers/extensions/extension_utils.dart';
 import 'package:patidar_melap_app/app/helpers/injection.dart';
+import 'package:patidar_melap_app/app/theme/app_theme.dart';
+import 'package:patidar_melap_app/app/theme/color_data.dart';
+import 'package:patidar_melap_app/app/theme/typography.dart';
 import 'package:patidar_melap_app/core/data/services/auth.service.dart';
 import 'package:patidar_melap_app/core/data/services/network_helper.service.dart';
 import 'package:timeago/timeago.dart' show format;
 
 extension BuildContextX on BuildContext {
-  ColorScheme get colorScheme => Theme.of(this).colorScheme;
+  AppColorsData get colorScheme => AppTheme.maybeOf(this)?.colors ?? AppColorsData.dark();
 
-  TextTheme get textTheme => Theme.of(this).textTheme;
+  AppTypographyData? get textTheme => AppTheme.maybeOf(this)?.typography;
 
   bool get isDarkMode => MediaQuery.platformBrightnessOf(this) == Brightness.dark;
 

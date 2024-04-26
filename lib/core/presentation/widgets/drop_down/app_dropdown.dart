@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:patidar_melap_app/app/config/app_constants.dart';
 import 'package:patidar_melap_app/app/helpers/extensions/extensions.dart';
-import 'package:patidar_melap_app/app/theme/app_theme.dart';
 import 'package:patidar_melap_app/app/theme/spacing.dart';
 import 'package:patidar_melap_app/core/presentation/widgets/drop_down/cubit/app_drop_down_cubit.dart';
 import 'package:patidar_melap_app/core/presentation/widgets/drop_down/model/dropdown_model.dart';
@@ -57,7 +56,7 @@ class CustomDropDown extends StatelessWidget {
                   if (labelText != null)
                     Text(
                       labelText!,
-                      style: context.textTheme.labelMedium?.copyWith(
+                      style: context.textTheme?.title.copyWith(
                         fontSize: 15,
                       ),
                     ),
@@ -65,8 +64,8 @@ class CustomDropDown extends StatelessWidget {
                   Container(
                     height: 60,
                     decoration: BoxDecoration(
-                      color: context.colorScheme.primary,
-                      borderRadius: BorderRadius.circular(radius ?? AppTheme.defaultRadius),
+                      color: context.colorScheme.primaryColor,
+                      borderRadius: BorderRadius.circular(radius ?? AppConstants.defaultRadius),
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 20),
                     child: DropdownButton<AppDropdownModel>(
@@ -77,7 +76,7 @@ class CustomDropDown extends StatelessWidget {
                       // ),
                       hint: Text(
                         hint ?? '',
-                        style: context.textTheme.labelMedium?.copyWith(
+                        style: context.textTheme?.title.copyWith(
                           fontSize: 15,
                           overflow: TextOverflow.ellipsis,
                           fontWeight: FontWeight.w400,
@@ -87,7 +86,7 @@ class CustomDropDown extends StatelessWidget {
                       value: context.read<AppDropDownCubit>().selectedDropdownValue,
                       icon: Icon(
                         Icons.keyboard_arrow_down,
-                        color: context.colorScheme.secondary,
+                        color: context.colorScheme.secondaryS300,
                       ),
                       elevation: 16,
                       underline: Container(),

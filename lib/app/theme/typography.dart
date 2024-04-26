@@ -8,7 +8,7 @@ class AppTypographyData extends Equatable {
     required this.title,
     required this.formLabel,
     required this.style16,
-    required this.bebas,
+    required this.muktaVaani,
   });
 
   factory AppTypographyData.regular() => const AppTypographyData(
@@ -30,7 +30,7 @@ class AppTypographyData extends Equatable {
           fontSize: 16,
           fontFamily: AppTheme.fontFamily,
         ),
-        bebas: TextStyle(
+        muktaVaani: TextStyle(
           fontSize: 16,
           fontFamily: AppTheme.muktaVaani,
         ),
@@ -40,8 +40,8 @@ class AppTypographyData extends Equatable {
   final TextStyle paragraph;
   final TextStyle formLabel;
   final TextStyle style16;
-  final TextStyle bebas;
+  final TextStyle muktaVaani;
 
   @override
-  List<Object?> get props => [title, paragraph, formLabel, style16, bebas];
+  List<Object?> get props => [title, paragraph, formLabel, style16, muktaVaani];
 }

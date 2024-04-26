@@ -5,6 +5,7 @@ enum Env {
   production('production');
 
   const Env(this.value);
+
   final String value;
 }
 
@@ -29,6 +30,7 @@ enum StatusCode {
   http000(000);
 
   const StatusCode(this.value);
+
   final int value;
 }
 
@@ -80,3 +82,5 @@ enum PermissionResult {
   denied,
   permanentlyDenied,
 }
+
+enum TextFieldBorder { outlinedBorder, baseBorder, none }

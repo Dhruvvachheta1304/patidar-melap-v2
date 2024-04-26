@@ -94,7 +94,7 @@ class ImagePickerUtils {
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: 'Cropper',
-            toolbarColor: context.colorScheme.primary,
+            toolbarColor: context.colorScheme.primaryColor,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false,
@@ -140,7 +140,7 @@ class ImagePickerUtils {
           uiSettings: [
             AndroidUiSettings(
               toolbarTitle: 'Cropper',
-              toolbarColor: context.colorScheme.primary,
+              toolbarColor: context.colorScheme.primaryColor,
               toolbarWidgetColor: Colors.white,
               initAspectRatio: CropAspectRatioPreset.original,
               lockAspectRatio: false,

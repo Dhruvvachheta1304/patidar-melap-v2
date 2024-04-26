@@ -17,13 +17,16 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
-          initial: true,
+          // initial: true,
           page: SplashRoute.page,
           guards: [
             AuthGuard(),
           ],
         ),
         AutoRoute(page: LoginRoute.page),
+    AutoRoute(page: SignUpRoute.page
+
+    ,initial: true),
         AutoRoute(page: CustomImageCropperRoute.page),
         AutoRoute(
           page: BottomNavigationBarRoute.page,

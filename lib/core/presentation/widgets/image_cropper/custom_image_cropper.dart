@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:patidar_melap_app/app/helpers/extensions/extensions.dart';
 import 'package:patidar_melap_app/app/theme/spacing.dart';
@@ -13,6 +13,7 @@ import 'package:patidar_melap_app/core/presentation/widgets/image_cropper/cubit/
 @RoutePage()
 class CustomImageCropperScreen extends StatefulWidget implements AutoRouteWrapper {
   const CustomImageCropperScreen({required this.imageFileList, super.key});
+
   final List<XFile>? imageFileList;
 
   @override
@@ -50,7 +51,7 @@ class _CustomImageCropperScreenState extends State<CustomImageCropperScreen> {
         ],
         leading: IconButton(
           onPressed: () {
-            context.popRoute();
+            context.maybePop();
           },
           icon: const Icon(Icons.arrow_back),
           padding: const EdgeInsets.all(Insets.medium),
@@ -58,8 +59,8 @@ class _CustomImageCropperScreenState extends State<CustomImageCropperScreen> {
         ),
         title: Text(
           'Crop Image',
-          style: context.textTheme.bodyLarge?.copyWith(
-            color: context.colorScheme.onSurfaceVariant,
+          style: context.textTheme?.title.copyWith(
+            color: context.colorScheme.outlineBorderColor,
           ),
         ),
       ),
@@ -95,19 +96,17 @@ class _CustomImageCropperScreenState extends State<CustomImageCropperScreen> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                color: context.colorScheme.shadow,
+                                color: context.colorScheme.primaryColor,
                                 border: Border.all(
                                   width: 2,
-                                  color: index == state.selectedIndex
-                                      ? context.colorScheme.primary
-                                      : Colors.transparent,
+                                  color: index == state.selectedIndex ? context.colorScheme.primaryColor : Colors.transparent,
                                 ),
                                 borderRadius: const BorderRadius.all(Radius.circular(4)),
                               ),
                               margin: const EdgeInsets.only(right: 5),
                               padding: const EdgeInsets.all(5),
                               child: Image.file(
-                                File(state.imageFileList?[index].path ?? ''),
+                                File(state?.imageFileList?[index].path ?? ''),
                                 height: 200,
                                 width: 100,
                                 fit: BoxFit.contain,

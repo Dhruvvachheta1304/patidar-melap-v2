@@ -27,7 +27,7 @@ class _ImageCropperTestState extends State<ImageCropperTest> {
       },
       icon: Icon(
         Icons.add_photo_alternate_outlined,
-        color: context.colorScheme.onPrimary,
+        color: context.colorScheme.primaryColor,
       ),
     );
   }

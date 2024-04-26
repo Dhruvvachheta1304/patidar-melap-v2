@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:patidar_melap_app/app/helpers/extensions/extensions.dart';
-import 'package:patidar_melap_app/app/theme/app_text_style.dart';
 import 'package:patidar_melap_app/app/theme/spacing.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,6 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.automaticallyImplyLeading = false,
     this.scrolledUnderElevation = 0,
     this.showTitle = true,
+    this.titleSpacing,
   });
 
   final String? title;
@@ -26,20 +25,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
   final bool automaticallyImplyLeading;
   final double scrolledUnderElevation;
+  final double? titleSpacing;
   final bool showTitle;
 
   @override
   Widget build(BuildContext context) => AppBar(
+        titleSpacing: titleSpacing,
         leading: leading,
         automaticallyImplyLeading: automaticallyImplyLeading,
         title: showTitle
             ? Padding(
                 padding: const EdgeInsets.only(left: Insets.xsmall),
                 child: Text(
-                  title ?? 'Boilerplate',
-                  style: context.textTheme.headlineSmall?.copyWith(
-                    color: titleColor ?? context.colorScheme.primary,
-                    fontWeight: AppFontWeight.medium,
+                  title ?? 'ABC',
+                  style: context.textTheme?.style16.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: titleColor ?? context.colorScheme.black,
                   ),
                 ),
               )

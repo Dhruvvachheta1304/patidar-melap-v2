@@ -1,7 +1,17 @@
 {
-    "login": "login",
-    "email": "Email",
-    "login_txt_account": "Login into your account",
-    "password_must_be_8_char": "Password must be 8 characters",
-    "ok": "Ok"
+  "login": "login",
+  "email": "Email",
+  "login_txt_account": "Login into your account",
+  "password_must_be_8_char": "Password must be 8 characters",
+  "ok": "Ok",
+  "username": "Username",
+  "enter_your_username": "Enter your username",
+  "password": "Password",
+  "enter_your_password": "Enter your password",
+  "enter_your_email": "Enter your email",
+  "mobile_number": "Mobile Number",
+  "enter_your_mobile_number": "Enter your mobile number",
+  "register": "Register",
+  "number_is_invalid": "Number is invalid",
+  "this_field_is_required": "This field is required"
 }

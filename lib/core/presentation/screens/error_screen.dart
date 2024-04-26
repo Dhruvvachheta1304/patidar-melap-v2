@@ -1,8 +1,6 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:patidar_melap_app/app/helpers/extensions/extensions.dart';
-import 'package:patidar_melap_app/app/theme/app_colors.dart';
 import 'package:patidar_melap_app/app/theme/spacing.dart';
 import 'package:patidar_melap_app/gen/assets.gen.dart';
 
@@ -45,9 +43,9 @@ class _ErrorContent extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final errorColor = context.colorScheme.error;
-          final primaryColor = context.colorScheme.primary;
+          final primaryColor = context.colorScheme.primaryColor;
           return Scaffold(
-            backgroundColor: AppColors.white,
+            backgroundColor: Colors.white,
             body: Padding(
               padding: const EdgeInsets.all(Insets.medium),
               child: Column(
@@ -55,9 +53,7 @@ class _ErrorContent extends StatelessWidget {
                 children: [
                   Assets.images.errorIllustration.image(),
                   Text(
-                    kDebugMode
-                        ? details.summary.toString()
-                        : 'Oups! Something went wrong!',
+                    kDebugMode ? details.summary.toString() : 'Oups! Something went wrong!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: kDebugMode ? errorColor : primaryColor,
@@ -72,7 +68,7 @@ class _ErrorContent extends StatelessWidget {
                         : "We encountered an error and we've notified our engineering team about it. Sorry for the inconvenience caused.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: AppColors.black,
+                      color: Colors.black,
                       fontSize: 14,
                     ),
                   ),
