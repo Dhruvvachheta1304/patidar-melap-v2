@@ -55,6 +55,8 @@ class SignUpScreen extends StatefulWidget implements AutoRouteWrapper {
 class _SignUpScreenState extends State<SignUpScreen> {
   late SignUpBloc signUpBloc;
 
+  CountryCode? countryCode = CountryCode(dialCode: '+91');
+
   @override
   void didChangeDependencies() {
     signUpBloc = context.read<SignUpBloc>();
@@ -200,10 +202,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         CountryCodePicker(
                           flagWidth: 22,
-                          // textStyle: const TextStyle(fontSize: 18),
                           dialogSize: const Size.fromHeight(420),
                           backgroundColor: Colors.red,
-                          initialSelection: 'IN',
+                          initialSelection: countryCode?.dialCode,
                           onChanged: _onCountryChange,
                           onInit: (code) => debugPrint(
                             'on init ${code?.name} ${code?.dialCode} ${code?.name}',
@@ -238,7 +239,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     AppButton(
                       text: LocaleKeys.register.tr(),
                       onPressed: () {
-                        if (signUpBloc.formKey.currentState!.validate()) {}
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        if (signUpBloc.formKey.currentState!.validate()) {
+                          _signUp();
+                        }
                       },
                       textStyle: TextStyle(
                         color: context.colorScheme.white,
@@ -256,8 +260,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-}
 
-void _onCountryChange(CountryCode countryCode) {
-  log('New Country selected: ${countryCode.dialCode}');
+  Future<void> _signUp() async {
+    final sendOtpRequest = SendOtpRequest(
+      countryCode: countryCode?.dialCode,
+      mobileNumber: signUpBloc.phoneController.text,
+    );
+    signUpBloc.add(
+      SendOtpEvent(
+        sendOtpRequest: sendOtpRequest,
+      ),
+    );
+  }
+
+  void _onCountryChange(CountryCode countryCode) {
+    this.countryCode = countryCode;
+    log('New Country selected: ${countryCode.dialCode}');
+  }
 }
