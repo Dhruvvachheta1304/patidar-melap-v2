@@ -23,10 +23,14 @@ class AppRouter extends _$AppRouter {
             AuthGuard(),
           ],
         ),
-        AutoRoute(page: LoginRoute.page),
-    AutoRoute(page: SignUpRoute.page
-
-    ,initial: true),
+        AutoRoute(
+          page: LoginRoute.page,
+          initial: true,
+        ),
+        AutoRoute(
+          page: SignUpRoute.page,
+          // initial: true,
+        ),
         AutoRoute(page: CustomImageCropperRoute.page),
         AutoRoute(
           page: BottomNavigationBarRoute.page,

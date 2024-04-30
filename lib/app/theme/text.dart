@@ -74,7 +74,7 @@ class AppText extends StatelessWidget {
   const AppText.muktaVaani(
     this.data, {
     super.key,
-    this.color = AppColors.white,
+    this.color,
     this.fontSize = 16,
     this.textDecoration,
     this.maxLines = 2,

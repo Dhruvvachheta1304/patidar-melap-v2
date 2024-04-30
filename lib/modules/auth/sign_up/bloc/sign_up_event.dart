@@ -8,3 +8,9 @@ class SendOtpEvent extends SignUpEvent {
 
   final SendOtpRequest sendOtpRequest;
 }
+
+class RegisterEvent extends SignUpEvent {
+  RegisterEvent({required this.signUpRequest});
+
+  final SignUpRequest signUpRequest;
+}

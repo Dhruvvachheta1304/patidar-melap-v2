@@ -16,3 +16,15 @@ class MakeSignUpState extends SignUpState {
   final String? errorMsg;
   final SendOtpRequest? responseModel;
 }
+
+class MakeRegisterState extends SignUpState {
+  MakeRegisterState({
+    this.responseModel,
+    this.errorMsg,
+    this.status = ApiStatus.initial,
+  });
+
+  final ApiStatus status;
+  final String? errorMsg;
+  final SignUpRequest? responseModel;
+}
