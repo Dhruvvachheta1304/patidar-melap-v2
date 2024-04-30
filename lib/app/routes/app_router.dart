@@ -25,6 +25,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: LoginRoute.page,
+          // initial: true,
+        ),
+        AutoRoute(
+          page: ProfileRoute.page,
           initial: true,
         ),
         AutoRoute(
@@ -36,7 +40,6 @@ class AppRouter extends _$AppRouter {
           page: BottomNavigationBarRoute.page,
           children: [
             AutoRoute(page: SignUpRoute.page),
-            AutoRoute(page: ProfileRoute.page),
           ],
         ),
       ];

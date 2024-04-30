@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 /// passing the Sub Failure class or while testing
 sealed class Failure {
   Failure();
+
   String get message;
 }
 
@@ -46,7 +47,9 @@ class APIFailure extends Failure {
 class ModelConversionFailure extends Failure {
   ModelConversionFailure({this.error, this.stackTrace}) {
     log(stackTrace.toString());
+    log(error.toString());
   }
+
   final Object? error;
   final StackTrace? stackTrace;
 
@@ -60,6 +63,7 @@ class JsonParsingFailure extends Failure {
   JsonParsingFailure({this.error, this.stackTrace}) {
     log(stackTrace.toString());
   }
+
   final Object? error;
   final StackTrace? stackTrace;
 
@@ -75,6 +79,7 @@ class UserSaveFailure extends Failure {
   }) {
     log(stackTrace.toString());
   }
+
   final Object? error;
   final StackTrace? stackTrace;
 
@@ -89,6 +94,7 @@ class UserTokenSaveFailure extends Failure {
   }) {
     log(stackTrace.toString());
   }
+
   final Object? error;
   final StackTrace? stackTrace;
 

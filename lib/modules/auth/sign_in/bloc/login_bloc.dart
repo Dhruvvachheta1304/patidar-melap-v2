@@ -1,62 +1,56 @@
-import 'dart:async';
-
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:patidar_melap_app/gen/locale_keys.g.dart';
+import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:patidar_melap_app/app/enum.dart';
 import 'package:patidar_melap_app/modules/auth/repository/auth_repository.dart';
+import 'package:patidar_melap_app/modules/auth/sign_in/model/login_reponse.dart';
+import 'package:patidar_melap_app/modules/auth/sign_in/model/login_request.dart';
 
-class LoginFormBloc extends FormBloc<String, String> {
-  LoginFormBloc({required IAuthRepository authenticationRepository})
-      : _authenticationRepository = authenticationRepository {
-    addFieldBlocs(fieldBlocs: [email, password]);
+part 'login_event.dart';
+part 'login_state.dart';
 
-    ///Custom validation for password character length check
-    password
-      ..addValidators([
-        passwordMin8Chars(password),
-      ])
-      ..subscribeToFieldBlocs([password]);
-  }
-  final IAuthRepository _authenticationRepository;
-
-  final email = TextFieldBloc(
-    validators: [
-      FieldBlocValidators.required,
-      FieldBlocValidators.email,
-    ],
-  );
-
-  final password = TextFieldBloc(
-    validators: [
-      FieldBlocValidators.required,
-    ],
-  );
-
-  ///Custom validation for password character length check
-  Validator<String> passwordMin8Chars(
-    TextFieldBloc passwordTextFieldBloc,
-  ) {
-    return (String? password) {
-      if (password == null || password.isEmpty || password.runes.length >= 8) {
-        return null;
-      }
-      return LocaleKeys.password_must_be_8_char.tr();
-    };
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  LoginBloc({required IAuthRepository repository})
+      : _authRepository = repository,
+        super(LoginInitial()) {
+    on<MakeLoginEvent>(_performSignIn);
   }
 
-  @override
-  FutureOr<void> onSubmitting() async {
-    await Future<void>.delayed(const Duration(seconds: 3));
+  bool passwordVisible = false;
 
-    final loginEither = await _authenticationRepository
+  final IAuthRepository _authRepository;
+  final formKey = GlobalKey<FormState>();
+
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future<Unit> _performSignIn(MakeLoginEvent event, Emitter<LoginState> emit) async {
+    emit(
+      const LoginState(
+        status: ApiStatus.loading,
+      ),
+    );
+
+    final signUpEither = await _authRepository
         .login(
-          email.value,
-          password.value,
+          request: event.logInRequest,
         )
         .run();
-    loginEither.fold(
-      (failure) => emitFailure(),
-      (success) => emitSuccess(),
+    signUpEither.fold(
+      (failure) => emit(
+        LoginState(
+          errorMsg: failure.message,
+          status: ApiStatus.error,
+        ),
+      ),
+      (success) async {
+        emit(
+          const LoginState(
+            status: ApiStatus.loaded,
+          ),
+        );
+      },
     );
+    return unit;
   }
 }

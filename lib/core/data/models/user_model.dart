@@ -18,7 +18,7 @@ class UserModel extends HiveObject {
     return UserModel(
       name: map['name'] as String,
       email: map['email'] as String,
-      id: map['id'] as int,
+      id: map['id'] as String,
       profilePicUrl: map['profilePicUrl'] as String,
     );
   }
@@ -32,7 +32,7 @@ class UserModel extends HiveObject {
   final String email;
 
   @HiveField(3)
-  final int id;
+  final String id;
 
   @HiveField(4)
   final String profilePicUrl;

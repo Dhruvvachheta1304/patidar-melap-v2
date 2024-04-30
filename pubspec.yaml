@@ -28,6 +28,7 @@ dependencies:
 
 
   country_code_picker: ^3.0.0
+  pinput: ^4.0.0
   cupertino_icons: ^1.0.6
 
   # internationalization

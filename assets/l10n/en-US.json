@@ -1,5 +1,5 @@
 {
-  "login": "login",
+  "login": "Log in",
   "email": "Email",
   "login_txt_account": "Login into your account",
   "password_must_be_8_char": "Password must be 8 characters",
@@ -13,5 +13,15 @@
   "enter_your_mobile_number": "Enter your mobile number",
   "register": "Register",
   "number_is_invalid": "Number is invalid",
-  "this_field_is_required": "This field is required"
+  "this_field_is_required": "This field is required",
+  "otp_send_success": "OTP sent successfully",
+  "enter_four_digit_code": "Enter 4 Digit Code",
+  "otp_hint_text": "Enter the 4 digits code that you received on\nyour mail.",
+  "continue_title": "Continue",
+  "please_enter_the_otp": "Please enter the OTP",
+  "invalid_otp": "Invalid OTP",
+  "hint_text_account": "Don’t have an account yet?",
+  "register_here": "Register Here",
+  "field_required": "Field is required",
+  "login_done": "Login done successfully"
 }
