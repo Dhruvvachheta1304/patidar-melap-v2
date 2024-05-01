@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:patidar_melap_app/app/theme/app_colors.dart';
 import 'package:patidar_melap_app/app/theme/app_theme.dart';
 

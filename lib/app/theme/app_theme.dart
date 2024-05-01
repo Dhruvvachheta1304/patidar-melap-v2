@@ -22,7 +22,7 @@ class AppTheme extends InheritedWidget {
   }
 
   static const String fontFamily = 'muktaVaani';
-  static const String muktaVaani = 'bebasNeue';
+  static const String muktaVaani = 'muktaVaani';
   static const double defaultRadius = 16;
   static const double radius6 = 6;
   static const double radius10 = 10;

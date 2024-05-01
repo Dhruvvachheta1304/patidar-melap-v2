@@ -5,6 +5,7 @@ import 'package:patidar_melap_app/app/routes/route_guards/auth_guard.dart';
 import 'package:patidar_melap_app/core/presentation/widgets/image_cropper/custom_image_cropper.dart';
 import 'package:patidar_melap_app/modules/auth/sign_in/screens/login_screen.dart';
 import 'package:patidar_melap_app/modules/auth/sign_up/screens/sign_up_screen.dart';
+import 'package:patidar_melap_app/modules/basic/screens/basic_details.dart';
 import 'package:patidar_melap_app/modules/bottom_navigation_bar.dart';
 import 'package:patidar_melap_app/modules/profile/screen/profile_screen.dart';
 import 'package:patidar_melap_app/modules/splash/splash_screen.dart';
@@ -35,6 +36,7 @@ class AppRouter extends _$AppRouter {
           page: SignUpRoute.page,
           // initial: true,
         ),
+        AutoRoute(page: BasicDetailsRoute.page),
         AutoRoute(page: CustomImageCropperRoute.page),
         AutoRoute(
           page: BottomNavigationBarRoute.page,
