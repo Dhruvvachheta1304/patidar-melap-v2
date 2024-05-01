@@ -23,5 +23,10 @@
   "hint_text_account": "Don’t have an account yet?",
   "register_here": "Register Here",
   "field_required": "Field is required",
-  "login_done": "Login done successfully"
+  "login_done": "Login done successfully",
+  "add_more_photos": "Add More Photos",
+  "basic_details": "Basic Detail",
+  "family_information": "Family Information",
+  "other_details": "Other Details",
+  "index_number": "Index Number"
 }

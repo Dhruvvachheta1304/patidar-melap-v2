@@ -178,11 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                         AppButton(
                           text: LocaleKeys.login.tr(),
                           isEnabled: state.status == ApiStatus.loading ? false : true,
-                          onPressed: () {
-                            _signIn();
-                            // onRegisterPressed(context);
-                            // _showOtpBottomSheet(context);
-                          },
+                          onPressed: _signIn,
                           textStyle: TextStyle(
                             color: context.colorScheme.white,
                             fontSize: 18,
@@ -194,13 +190,10 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            AppText.muktaVaani(
                               LocaleKeys.hint_text_account.tr(),
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                                color: context.colorScheme.grey400,
-                              ),
+                              fontSize: 13,
+                              color: context.colorScheme.grey400,
                             ),
                             const HSpace(5),
                             InkWell(
@@ -209,12 +202,10 @@ class _LoginPageState extends State<LoginPage> {
                                   const SignUpRoute(),
                                 );
                               },
-                              child: Text(
+                              child: AppText.muktaVaani(
                                 LocaleKeys.register_here.tr(),
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                fontSize: 13,
+                                color: context.colorScheme.black,
                               ),
                             ),
                           ],

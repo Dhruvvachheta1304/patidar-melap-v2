@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:patidar_melap_app/app/routes/app_router.dart';
+import 'package:patidar_melap_app/gen/locale_keys.g.dart';
 import 'package:patidar_melap_app/modules/profile/widget/custom_profile_tabs.dart';
 
 @RoutePage()
@@ -33,21 +35,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   CustomProfileTabs(
                     onTap: () {},
-                    text: 'Add More Photos',
+                    text: LocaleKeys.add_more_photos.tr(),
                   ),
                   CustomProfileTabs(
                     onTap: () {
                       context.pushRoute(const BasicDetailsRoute());
                     },
-                    text: 'Basic Detail',
+                    text: LocaleKeys.basic_details.tr(),
                   ),
                   CustomProfileTabs(
                     onTap: () {},
-                    text: 'Family Information',
+                    text: LocaleKeys.family_information.tr(),
                   ),
                   CustomProfileTabs(
                     onTap: () {},
-                    text: 'Other Details',
+                    text: LocaleKeys.other_details.tr(),
                   ),
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:patidar_melap_app/app/theme/text.dart';
 
 class CustomProfileTabs extends StatefulWidget {
   const CustomProfileTabs({super.key, this.text, this.onTap});
@@ -46,14 +47,8 @@ class _CustomProfileTabsState extends State<CustomProfileTabs> {
             color: Colors.white,
             size: 25,
           ),
-
-          title: Text(
+          title: AppText.muktaVaani(
             widget.text ?? '',
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
           ),
         ),
       ),

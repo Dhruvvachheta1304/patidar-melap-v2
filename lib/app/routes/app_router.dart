@@ -30,11 +30,15 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: ProfileRoute.page,
-          initial: true,
+          // initial: true,
         ),
         AutoRoute(
           page: SignUpRoute.page,
           // initial: true,
+        ),
+        AutoRoute(
+          page: SignUpRoute.page,
+          initial: true,
         ),
         AutoRoute(page: BasicDetailsRoute.page),
         AutoRoute(page: CustomImageCropperRoute.page),

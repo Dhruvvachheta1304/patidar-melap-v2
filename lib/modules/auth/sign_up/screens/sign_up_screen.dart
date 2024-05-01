@@ -103,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           controller: signUpBloc.userNameController,
                           titleDescription: AppText.muktaVaani(
                             LocaleKeys.username.tr(),
-                            color: Colors.red,
+                            color: AppColors.grey700,
                           ),
                           fillColor: context.colorScheme.grey100,
                           hintText: LocaleKeys.enter_your_username.tr(),
@@ -241,7 +241,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             onRegisterPressed(context);
                             // _showOtpBottomSheet(context);
                           },
-                          textStyle: TextStyle(
+                          textStyle: context.textTheme?.muktaVaani.copyWith(
                             color: context.colorScheme.white,
                             fontSize: 18,
                           ),
@@ -328,22 +328,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   // mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
+                    AppText.muktaVaani(
                       LocaleKeys.enter_four_digit_code.tr(),
-                      style: const TextStyle(
-                        color: AppColors.black,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      fontSize: 24,
+                      color: context.colorScheme.black,
                     ),
                     VSpace.xsmall(),
-                    Text(
+                    AppText.muktaVaani(
                       LocaleKeys.otp_hint_text.tr(),
-                      style: const TextStyle(
-                        color: AppColors.grey400,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      fontSize: 16,
+                      color: context.colorScheme.grey400,
                     ),
                     VSpace.xlarge(),
                     Row(
@@ -386,7 +380,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     log(signUpBloc.otpController.text);
                     debugPrint(signUpBloc.otpController.text);
                   },
-                  textStyle: TextStyle(
+                  textStyle: context.textTheme?.muktaVaani.copyWith(
                     color: context.colorScheme.white,
                     fontSize: 18,
                   ),
