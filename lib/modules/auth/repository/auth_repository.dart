@@ -111,7 +111,11 @@ class AuthRepository implements IAuthRepository {
   }) =>
       makeSendOtpRequest(request: request).chainEither(RepositoryUtils.checkStatusCode).chainEither(
             (response) => RepositoryUtils.mapToModel<SendOtpRequest>(
-              () => SendOtpRequest.fromJson(response.data),
+              () => SendOtpRequest.fromJson(
+                jsonDecode(
+                  response.data.toString(),
+                ),
+              ),
             ),
           );
 
@@ -123,8 +127,6 @@ class AuthRepository implements IAuthRepository {
       body: FormData.fromMap(request.toJson()),
     );
   }
-
-  ///
 
   @override
   Future<bool> logout() async {

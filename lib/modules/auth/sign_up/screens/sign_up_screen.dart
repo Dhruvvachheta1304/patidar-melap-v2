@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:patidar_melap_app/app/enum.dart';
 import 'package:patidar_melap_app/app/helpers/extensions/extensions.dart';
+import 'package:patidar_melap_app/app/routes/app_router.dart';
 import 'package:patidar_melap_app/app/theme/app_colors.dart';
 import 'package:patidar_melap_app/app/theme/app_text_style.dart';
 import 'package:patidar_melap_app/app/theme/spacing.dart';
@@ -80,19 +81,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 padding: const EdgeInsets.all(18),
                 child: BlocConsumer<SignUpBloc, SignUpState>(
                   listener: (context, state) {
-                    if (state is MakeSignUpState && state.status == ApiStatus.loaded) {
+                    if (state is SendOtpState && state.status == ApiStatus.loaded) {
                       AppUtils.showSnackBar(
                         context,
                         state.responseModel?.type,
                       );
                     }
 
-                    if (state is MakeSignUpState && state.status == ApiStatus.error) {
+                    if (state is SendOtpState && state.status == ApiStatus.error) {
                       AppUtils.showSnackBar(
                         context,
                         state.errorMsg,
                         isError: true,
                       );
+                    }
+                    if (state is RegisterState) {
+                      if (state.status == ApiStatus.loaded) {
+                        AppUtils.showSnackBar(
+                          context,
+                          LocaleKeys.sign_up_done.tr(),
+                        );
+                        context.router.pushAndPopUntil(
+                          const ProfileRoute(),
+                          predicate: (_) => false,
+                        );
+                      }
+
+                      if (state.status == ApiStatus.error) {
+                        AppUtils.showSnackBar(
+                          context,
+                          state.errorMsg,
+                          isError: true,
+                        );
+                      }
                     }
                   },
                   builder: (context, state) {
@@ -109,7 +130,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hintText: LocaleKeys.enter_your_username.tr(),
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
-                              return 'This field is required';
+                              return LocaleKeys.common_msg_required_field.tr();
                             } else if (!(value.length >= 8 && value.length <= 20)) {
                               return 'username must be 9 to 20 character, no space include';
                             }
@@ -152,7 +173,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{8,}$',
                             );
                             if (value == null || value.isEmpty) {
-                              return 'This field is required';
+                              return LocaleKeys.common_msg_required_field.tr();
                             } else if (!(value.length >= 8 && regex.hasMatch(value))) {
                               return 'Minimum eight characters, at least one uppercase letter, one lowecase letter, one number and one special character';
                             }
@@ -174,7 +195,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
                             );
                             if (value == null || value.isEmpty) {
-                              return 'This field is required';
+                              return LocaleKeys.common_msg_required_field.tr();
                             } else if (!regex.hasMatch(value)) {
                               return 'Email is invalid';
                             }
@@ -217,9 +238,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 hintText: LocaleKeys.enter_your_mobile_number.tr(),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'This field is required';
+                                    return LocaleKeys.common_msg_required_field.tr();
                                   } else if (!(value.length == 10)) {
-                                    return 'number is invalid';
+                                    return LocaleKeys.common_msg_invalid_number.tr();
+                                    ;
                                   }
                                   return null;
                                 },
@@ -236,9 +258,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         VSpace.xxxlarge(),
                         AppButton(
                           text: LocaleKeys.register.tr(),
-                          isEnabled: (state is MakeSignUpState && state.status == ApiStatus.loading) ? false : true,
+                          isEnabled: state is SendOtpState && state.status == ApiStatus.loading ? false : true,
                           onPressed: () {
-                            onRegisterPressed(context);
+                            // onRegisterPressed(context);
+                            // _sendOtp();
+                            FocusScope.of(context).requestFocus(FocusNode());
+
+                            if (signUpBloc.formKey.currentState!.validate()) {
+                              // if (state is SendOtpState && state.status == ApiStatus.loaded) {
+                              //   _showOtpBottomSheet(context);
+                              //   _sendOtp();
+                              // }
+                              if (state is SendOtpState && state.status == ApiStatus.error) {
+                                AppUtils.showSnackBar(
+                                  context,
+                                  state.errorMsg,
+                                );
+                              }
+                            }
+
                             // _showOtpBottomSheet(context);
                           },
                           textStyle: context.textTheme?.muktaVaani.copyWith(
@@ -363,16 +401,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                               return null;
                             },
-                            // onCompleted: (_) => controller.onOtpTap(),
                           ),
                         ),
                       ],
                     ),
                   ],
                 ),
-                const VSpace(200),
+                const VSpace(180),
                 AppButton(
                   text: LocaleKeys.continue_title.tr(),
+                  // isEnabled: state is SendOtpState && state.status == ApiStatus.loading ? false : true,
+                  isEnabled: true,
                   onPressed: () {
                     if (signUpBloc.otpFormKey.currentState!.validate()) {
                       _signUp();

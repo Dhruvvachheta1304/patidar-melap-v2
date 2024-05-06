@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:patidar_melap_app/app/theme/text.dart';
 
 class CustomProfileTabs extends StatefulWidget {
-  const CustomProfileTabs({super.key, this.text, this.onTap});
+  const CustomProfileTabs({super.key, this.text, this.onTap, this.disableColor});
 
   final String? text;
   final VoidCallback? onTap;
+  final bool? disableColor;
 
   @override
   State<CustomProfileTabs> createState() => _CustomProfileTabsState();
@@ -20,9 +21,19 @@ class _CustomProfileTabsState extends State<CustomProfileTabs> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
-            colors: [Colors.red, Colors.pink.shade600],
-          ),
+          gradient: widget.disableColor!
+              ? LinearGradient(
+                  colors: [
+                    Colors.red,
+                    Colors.pink.shade600,
+                  ],
+                )
+              : LinearGradient(
+                  colors: [
+                    Colors.grey,
+                    Colors.grey.shade600,
+                  ],
+                ),
         ),
         height: 50,
         margin: const EdgeInsets.only(

@@ -106,7 +106,7 @@ class _CustomImageCropperScreenState extends State<CustomImageCropperScreen> {
                               margin: const EdgeInsets.only(right: 5),
                               padding: const EdgeInsets.all(5),
                               child: Image.file(
-                                File(state?.imageFileList?[index].path ?? ''),
+                                File(state.imageFileList?[index].path ?? ''),
                                 height: 200,
                                 width: 100,
                                 fit: BoxFit.contain,

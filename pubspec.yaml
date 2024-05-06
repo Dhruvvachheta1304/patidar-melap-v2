@@ -73,12 +73,19 @@ dependencies:
   data_connection_checker_nulls: ^0.0.2
 
   # Image picker
-  image_picker: ^1.0.4
+  image_picker: ^1.1.1
   permission_handler: ^11.0.1
   device_info_plus: ^9.1.0
   image_cropper: ^5.0.0
   cached_network_image: ^3.3.0
   flutter_svg: ^2.0.9
+  animated_custom_dropdown: ^3.0.0
+  timezone: ^0.9.3
+  jiffy: ^6.2.1
+
+
+
+
 
 dev_dependencies:
   flutter_test:

@@ -8,13 +8,14 @@ import 'package:patidar_melap_app/app/enum.dart';
 import 'package:patidar_melap_app/core/domain/failure.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-
 /// This class is used for connecting with remote data source using Dio
 /// as an API Client. This class is responsible for making API requests and
 /// sending the response in case of success and error in case of API failure.
 final class ApiClient {
   factory ApiClient() => instance;
+
   ApiClient._internal();
+
   static final instance = ApiClient._internal();
 
   ///initialize dio and Hive Cache for API. It is configurable to disable the
@@ -47,8 +48,8 @@ final class ApiClient {
     BaseOptions(
       baseUrl: AppConfig.baseApiUrl,
       contentType: 'application/json',
-      connectTimeout: const Duration(seconds: 5),
-      receiveTimeout: const Duration(seconds: 5),
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 15),
     ),
   );
 

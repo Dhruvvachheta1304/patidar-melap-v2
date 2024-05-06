@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
         if (state.status == ApiStatus.error) {
           AppUtils.showSnackBar(
             context,
-            state.errorMsg,
+            state.responseModel?.message,
             isError: true,
           );
         }
@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
             LocaleKeys.login_done.tr(),
           );
           context.replaceRoute(
-            const SignUpRoute(),
+            const ProfileRoute(),
           );
         }
       },
@@ -124,9 +124,10 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: LocaleKeys.enter_your_mobile_number.tr(),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'This field is required';
+                              return LocaleKeys.common_msg_required_field.tr();
                             } else if (!(value.length == 10)) {
-                              return 'number is invalid';
+                              return LocaleKeys.common_msg_invalid_number.tr();
+                              ;
                             }
                             return null;
                           },
@@ -167,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                               r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{8,}$',
                             );
                             if (value == null || value.isEmpty) {
-                              return 'This field is required';
+                              return LocaleKeys.common_msg_required_field.tr();
                             } else if (!(value.length >= 8 && regex.hasMatch(value))) {
                               return 'Minimum eight characters, at least one uppercase letter, one lowecase letter, one number and one special character';
                             }

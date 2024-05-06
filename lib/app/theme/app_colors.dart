@@ -27,6 +27,8 @@ abstract class AppColors {
   static const primary100 = Color(0xffECFBDA);
   static const success500 = Color(0xff22C55E);
   static const primary600 = Color(0xff46A130);
+  static const info = Color(0xffEFF6FF);
+  static const danger50 = Color(0xffFEF2F2);
 
   ///
   static const mainM900 = Color(0xFF430522);

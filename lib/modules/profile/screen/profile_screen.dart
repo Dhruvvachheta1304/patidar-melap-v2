@@ -34,20 +34,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Column(
                 children: [
                   CustomProfileTabs(
+                    disableColor: true,
                     onTap: () {},
                     text: LocaleKeys.add_more_photos.tr(),
                   ),
-                  CustomProfileTabs(
-                    onTap: () {
-                      context.pushRoute(const BasicDetailsRoute());
-                    },
-                    text: LocaleKeys.basic_details.tr(),
+                  AbsorbPointer(
+                    // absorbing: false,
+                    child: CustomProfileTabs(
+                      disableColor: false,
+                      onTap: () {
+                        context.pushRoute(const BasicDetailsRoute());
+                      },
+                      text: LocaleKeys.basic_details.tr(),
+                    ),
                   ),
                   CustomProfileTabs(
+                    disableColor: false,
                     onTap: () {},
                     text: LocaleKeys.family_information.tr(),
                   ),
                   CustomProfileTabs(
+                    disableColor: false,
                     onTap: () {},
                     text: LocaleKeys.other_details.tr(),
                   ),

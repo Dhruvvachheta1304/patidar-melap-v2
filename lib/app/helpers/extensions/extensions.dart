@@ -25,6 +25,8 @@ extension BuildContextX on BuildContext {
 }
 
 extension DateTimeX on DateTime {
+  int get secondsSinceEpoch => millisecondsSinceEpoch ~/ 1000;
+
   String defaultFormat() => DateFormat('MMM dd, yyyy').format(this);
 
   String get ago => format(

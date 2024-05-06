@@ -10,6 +10,8 @@ class ApiConstants {
   static const sendOtp = 'https://patidar-dev.preview.im/api/v1/send-otp';
   static const register = 'https://patidar-dev.preview.im/api/v1/register';
   static const login = 'https://patidar-dev.preview.im/api/v1/login';
+  static const salaryCurrency = 'https://patidar-dev.preview.im/api/v1/salary-currency-list';
+  static const caste = 'https://patidar-dev.preview.im/api/v1/castes';
 }
 
 class AppConstants {

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:patidar_melap_app/app/helpers/extensions/extensions.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
     required this.text,
     required this.onPressed,
-    this.isEnabled = true,
+    this.isEnabled,
     this.isExpanded = true,
     this.textStyle,
     this.padding,
@@ -19,7 +20,7 @@ class AppButton extends StatelessWidget {
   });
 
   final String text;
-  final bool isEnabled;
+  final bool? isEnabled;
   final bool isExpanded;
   final VoidCallback? onPressed;
   final TextStyle? textStyle;
@@ -43,7 +44,7 @@ class AppButton extends StatelessWidget {
         width: isExpanded ? double.maxFinite : null,
         child: _ButtonContent(
           text: text,
-          isEnabled: isEnabled,
+          isEnabled: isEnabled ?? false,
           isExpanded: isExpanded,
           onPressed: onPressed,
           contentPadding: contentPadding,
@@ -118,11 +119,15 @@ class _ButtonContent extends StatelessWidget {
           border: isOutline ? Border.all(color: borderColor ?? Colors.black) : null,
         ),
         child: Center(
-          child: Text(
-            text,
-            style: textStyle ?? defaultTextStyle,
-            textAlign: TextAlign.center,
-          ),
+          child: isEnabled
+              ? Text(
+                  text,
+                  style: textStyle ?? defaultTextStyle,
+                  textAlign: TextAlign.center,
+                )
+              : CircularProgressIndicator(
+                  color: context.colorScheme.white,
+                ),
         ),
       ),
     );

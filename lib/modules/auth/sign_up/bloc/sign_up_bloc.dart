@@ -35,7 +35,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   Future<Unit> _sendOtp(SendOtpEvent event, Emitter<SignUpState> emit) async {
     emit(
-      MakeSignUpState(
+      SendOtpState(
         status: ApiStatus.loading,
       ),
     );
@@ -44,14 +44,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
     signUpEither.fold(
       (failure) => emit(
-        MakeSignUpState(
+        SendOtpState(
           errorMsg: failure.message,
           status: ApiStatus.error,
         ),
       ),
       (success) async {
         emit(
-          MakeSignUpState(
+          SendOtpState(
             responseModel: success,
             status: ApiStatus.loaded,
           ),
@@ -62,20 +62,24 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   Future<Unit> _register(RegisterEvent event, Emitter<SignUpState> emit) async {
-    emit(MakeRegisterState(status: ApiStatus.loading));
+    emit(
+      RegisterState(
+        status: ApiStatus.loading,
+      ),
+    );
 
     final registerEither = await _authRepository.register(request: event.signUpRequest).run();
 
     registerEither.fold(
       (failure) => emit(
-        MakeRegisterState(
+        RegisterState(
           errorMsg: failure.message,
           status: ApiStatus.error,
         ),
       ),
       (success) async {
         emit(
-          MakeRegisterState(
+          RegisterState(
             responseModel: success,
             status: ApiStatus.loaded,
           ),

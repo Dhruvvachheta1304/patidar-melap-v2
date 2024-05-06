@@ -2,48 +2,51 @@ import 'package:flutter/widgets.dart';
 import 'package:patidar_melap_app/app/theme/app_colors.dart';
 
 class AppColorsData {
-  const AppColorsData({
-    required this.grey400,
-    required this.background,
-    required this.foreground,
-    required this.error,
-    required this.cursorColor,
-    required this.textColor,
-    required this.outlineBorderColor,
-    required this.underlineBorderColor,
-    required this.comboWidgetBackgroundColor,
-    required this.gray900,
-    required this.primaryColor,
-    required this.secondaryS300,
-    required this.secondaryS500,
-    required this.mainM900,
-    required this.secondaryS900,
-    required this.grey100,
-    required this.grey700,
-    required this.gray600,
-    required this.secondaryS400,
-    required this.mainM200,
-    required this.mainM300,
-    required this.grayG900,
-    required this.secondaryS800,
-    required this.gray800,
-    required this.grey500,
-    required this.mainM800,
-    required this.lavenderColor,
-    required this.textFieldFill,
-    required this.white,
-    required this.black,
-    required this.danger500,
-    required this.transparent,
-    required this.scaffoldBgColor,
-    required this.primary100,
-    required this.grey300,
-    required this.success500,
-    required this.grey200,
-    required this.primary600,
-  });
+  const AppColorsData(
+      {required this.grey400,
+      required this.background,
+      required this.foreground,
+      required this.error,
+      required this.cursorColor,
+      required this.textColor,
+      required this.outlineBorderColor,
+      required this.underlineBorderColor,
+      required this.comboWidgetBackgroundColor,
+      required this.gray900,
+      required this.primaryColor,
+      required this.secondaryS300,
+      required this.secondaryS500,
+      required this.mainM900,
+      required this.secondaryS900,
+      required this.grey100,
+      required this.grey700,
+      required this.gray600,
+      required this.secondaryS400,
+      required this.mainM200,
+      required this.mainM300,
+      required this.grayG900,
+      required this.secondaryS800,
+      required this.gray800,
+      required this.grey500,
+      required this.mainM800,
+      required this.lavenderColor,
+      required this.textFieldFill,
+      required this.white,
+      required this.black,
+      required this.danger500,
+      required this.transparent,
+      required this.scaffoldBgColor,
+      required this.primary100,
+      required this.grey300,
+      required this.success500,
+      required this.grey200,
+      required this.primary600,
+      required this.info,
+      required this.danger50});
 
   factory AppColorsData.light() => const AppColorsData(
+        danger50: AppColors.danger50,
+        info: AppColors.info,
         foreground: Color(0xffffffff),
         background: AppColors.backgroundColorDark,
         error: Color(0xffff0000),
@@ -85,6 +88,8 @@ class AppColorsData {
       );
 
   factory AppColorsData.dark() => const AppColorsData(
+        danger50: AppColors.danger50,
+        info: AppColors.info,
         danger500: AppColors.danger500,
         grey400: AppColors.grey400,
         foreground: Color(0xffffffff),
@@ -163,4 +168,6 @@ class AppColorsData {
   final Color success500;
   final Color grey200;
   final Color primary600;
+  final Color info;
+  final Color danger50;
 }
