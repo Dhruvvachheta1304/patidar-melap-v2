@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
         if (state.status == ApiStatus.error) {
           AppUtils.showSnackBar(
             context,
-            state.responseModel?.message,
+            state.errorMsg,
             isError: true,
           );
         }
@@ -127,7 +127,6 @@ class _LoginPageState extends State<LoginPage> {
                               return LocaleKeys.common_msg_required_field.tr();
                             } else if (!(value.length == 10)) {
                               return LocaleKeys.common_msg_invalid_number.tr();
-                              ;
                             }
                             return null;
                           },

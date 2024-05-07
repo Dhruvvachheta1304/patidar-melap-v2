@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:patidar_melap_app/app/config/api_config.dart';
 import 'package:patidar_melap_app/app/config/app_constants.dart';
@@ -11,7 +10,6 @@ import 'package:patidar_melap_app/core/data/models/user_model.dart';
 import 'package:patidar_melap_app/core/data/repository-utils/repository_utils.dart';
 import 'package:patidar_melap_app/core/data/services/auth.service.dart';
 import 'package:patidar_melap_app/core/domain/failure.dart';
-import 'package:patidar_melap_app/gen/locale_keys.g.dart';
 import 'package:patidar_melap_app/modules/auth/sign_in/model/login_reponse.dart';
 import 'package:patidar_melap_app/modules/auth/sign_in/model/login_request.dart';
 import 'package:patidar_melap_app/modules/auth/sign_up/model/send_otp_request.dart';
@@ -19,7 +17,7 @@ import 'package:patidar_melap_app/modules/auth/sign_up/model/sign_up_request.dar
 
 /// This repository contains the contract for login and logout function
 abstract interface class IAuthRepository {
-  TaskEither<Failure, Unit> login({required LogInRequest request});
+  TaskEither<Failure, LoginResponse> login({required LogInRequest request});
 
   TaskEither<Failure, SignUpRequest> register({required SignUpRequest request});
 
@@ -37,22 +35,20 @@ class AuthRepository implements IAuthRepository {
   final _authService = getIt<IAuthService>();
 
   @override
-  TaskEither<Failure, Unit> login({required LogInRequest request}) => mappingLoginRequest(request: request);
+  TaskEither<Failure, LoginResponse> login({required LogInRequest request}) => mappingLoginRequest(request: request);
 
-  TaskEither<Failure, Unit> mappingLoginRequest({required LogInRequest request}) => makeLoginRequest(request: request)
+  TaskEither<Failure, LoginResponse> mappingLoginRequest({required LogInRequest request}) => makeLoginRequest(request: request)
       .chainEither(RepositoryUtils.checkStatusCode)
       .chainEither(
         (response) => RepositoryUtils.mapToModel<LoginResponse>(
           () => LoginResponse.fromJson(
-            jsonDecode(
-              response.data.toString(),
-            ),
+            jsonDecode(response.toString()) as Map<String, dynamic>,
           ),
         ),
       )
       .flatMap(saveTokenToLocal);
 
-  TaskEither<Failure, Unit> saveTokenToLocal(LoginResponse loginResponseModel) {
+  TaskEither<Failure, LoginResponse> saveTokenToLocal(LoginResponse loginResponseModel) {
     if (loginResponseModel.token != null) {
       ApiClient.setAuthorizationToken(loginResponseModel.token!);
       final updatedModel = UserModel(
@@ -62,9 +58,12 @@ class AuthRepository implements IAuthRepository {
         profilePicUrl: '',
       );
       _authService.setUserData(updatedModel).run();
-      return _authService.setAccessToken(loginResponseModel.token!);
+      _authService.setAccessToken(loginResponseModel.token!);
+      return TaskEither.right(loginResponseModel);
     } else {
-      return TaskEither.left(APIFailure(error: LocaleKeys.field_required.tr()));
+      return TaskEither.left(
+        APIFailure(error: loginResponseModel),
+      );
     }
   }
 
@@ -87,7 +86,11 @@ class AuthRepository implements IAuthRepository {
   }) =>
       makeRegisterRequest(request: request).chainEither(RepositoryUtils.checkStatusCode).chainEither(
             (response) => RepositoryUtils.mapToModel<SignUpRequest>(
-              () => SignUpRequest.fromJson(response.data),
+              () => SignUpRequest.fromJson(
+                jsonDecode(
+                  response.data.toString(),
+                ),
+              ),
             ),
           );
 

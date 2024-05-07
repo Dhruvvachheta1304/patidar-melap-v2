@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:patidar_melap_app/modules/auth/sign_in/model/login_reponse.dart';
 
 /// Here, we're creating an abstract class for Faliure, Because
 /// We can swap any kind of implementation that we want while
@@ -34,6 +35,15 @@ class APIFailure extends Failure {
           errorMessage = (exception?.response?.data['message'] != null)
               // ignore: avoid_dynamic_calls
               ? exception?.response?.data['message']
+              : null;
+        }
+      } else {
+        if (error is Object) {
+          var errorData = error! as LoginResponse;
+
+          errorMessage = (errorData.message != null)
+              // ignore: avoid_dynamic_calls
+              ? errorData.message
               : null;
         }
       }

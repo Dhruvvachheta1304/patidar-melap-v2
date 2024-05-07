@@ -7,11 +7,19 @@ class LoginResponse {
     this.planId,
   });
 
-  LoginResponse.fromJson(dynamic json) {
+  LoginResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     token = json['token'];
-    userData = json['user_data'] != null ? UserData.fromJson(json['user_data']) : null;
+    if (json['user_data'] != null) {
+      if (json['user_data'] is List<dynamic>) {
+        userData = null;
+      } else {
+        userData = UserData.fromJson(json['user_data'] as Map<String, dynamic>);
+      }
+    }
+    // userData = json['user_data'] != null ?
+    // UserData.fromJson(json['user_data'] as Map<String, dynamic>) : null;
     planId = json['plan_id'];
   }
 
@@ -52,7 +60,7 @@ class UserData {
       this.otherDetailCompleted,
       this.photosCompleted});
 
-  UserData.fromJson(dynamic json) {
+  UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     matriId = json['matri_id'];
     indexNumber = json['index_number'];

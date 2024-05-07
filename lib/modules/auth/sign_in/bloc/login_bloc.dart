@@ -37,16 +37,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         )
         .run();
     signUpEither.fold(
-      (failure) => emit(
-        LoginState(
-          errorMsg: failure.message,
-          status: ApiStatus.error,
-        ),
-      ),
-      (success) async {
+      (failure) {
         emit(
-          const LoginState(
+          LoginState(
+            errorMsg: failure.message,
+            status: ApiStatus.error,
+          ),
+        );
+      },
+      (success) {
+        emit(
+          LoginState(
             status: ApiStatus.loaded,
+            responseModel: success,
           ),
         );
       },
