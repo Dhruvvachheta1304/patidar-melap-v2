@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
-
 import 'package:patidar_melap_app/app/config/api_config.dart';
 import 'package:patidar_melap_app/app/config/app_config.dart';
 import 'package:patidar_melap_app/app/enum.dart';
@@ -41,6 +40,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder, Env env) async {
   // MemoryAllocations.instance.addListener((ObjectEvent event) {
   //   dispatchObjectEvent(event.toMap());
   // });
+  getIt<IAuthService>().getAccessToken().fold(() => null, ApiClient.setAuthorizationToken);
+
   runApp(await builder());
 }
 

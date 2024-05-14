@@ -44,11 +44,7 @@ dependencies:
 
   # Class comparison and form validation
   equatable: ^2.0.5
-  flutter_form_bloc:
-    git:
-      url: https://github.com/Cavin6080/form_bloc.git
-      path: packages/flutter_form_bloc
-      branch: development
+
 
   # Utils
   logger: ^2.0.2+1
@@ -82,7 +78,8 @@ dependencies:
   animated_custom_dropdown: ^3.0.0
   timezone: ^0.9.3
   jiffy: ^6.2.1
-
+  mime_type: ^1.0.0
+  http_parser: ^4.0.2
 
 
 

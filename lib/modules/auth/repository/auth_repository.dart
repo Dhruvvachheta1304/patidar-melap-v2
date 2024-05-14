@@ -24,6 +24,8 @@ abstract interface class IAuthRepository {
   TaskEither<Failure, SendOtpRequest> sendOtp({required SendOtpRequest request});
 
   Future<bool> logout();
+
+  TaskEither<Failure, Unit> logoutData();
 }
 
 /// This class contains the implementation for login and logout functions.
@@ -34,6 +36,7 @@ class AuthRepository implements IAuthRepository {
 
   final _authService = getIt<IAuthService>();
 
+  ///LOGIN
   @override
   TaskEither<Failure, LoginResponse> login({required LogInRequest request}) => mappingLoginRequest(request: request);
 
@@ -58,7 +61,7 @@ class AuthRepository implements IAuthRepository {
         profilePicUrl: '',
       );
       _authService.setUserData(updatedModel).run();
-      _authService.setAccessToken(loginResponseModel.token!);
+      _authService.setAccessToken(loginResponseModel.token!).run();
       return TaskEither.right(loginResponseModel);
     } else {
       return TaskEither.left(
@@ -76,6 +79,34 @@ class AuthRepository implements IAuthRepository {
     );
   }
 
+  //Logout
+  @override
+  Future<bool> logout() async {
+    try {
+      await Future<void>.delayed(const Duration(seconds: 2));
+      //clear auth tokens from the local storage
+      await _authService.clearData().run();
+      return true;
+    } catch (error) {
+      log(error.toString());
+      return false;
+    }
+  }
+
+  @override
+  TaskEither<Failure, Unit> logoutData() => mappingLogoutRequest();
+
+  TaskEither<Failure, Unit> mappingLogoutRequest() => makeLogoutRequest()
+      .chainEither(RepositoryUtils.checkStatusCode)
+      .flatMap((response) => _authService.clearData().toTaskEither<Failure>());
+
+  TaskEither<Failure, Response> makeLogoutRequest() {
+    return ApiClient.request(
+      path: ApiConstants.logout,
+    );
+  }
+
+  ///Register
   @override
   TaskEither<Failure, SignUpRequest> register({required SignUpRequest request}) => mappingRegisterRequest(
         request: request,
@@ -131,17 +162,17 @@ class AuthRepository implements IAuthRepository {
     );
   }
 
-  @override
-  Future<bool> logout() async {
-    try {
-      await Future<void>.delayed(const Duration(seconds: 2));
-
-      //clear auth tokens from the local storage
-      await getIt<IAuthService>().clearData().run();
-      return true;
-    } catch (error) {
-      log(error.toString());
-      return false;
-    }
-  }
+// @override
+// Future<bool> logout() async {
+//   try {
+//     await Future<void>.delayed(const Duration(seconds: 2));
+//
+//     //clear auth tokens from the local storage
+//     await getIt<IAuthService>().clearData().run();
+//     return true;
+//   } catch (error) {
+//     log(error.toString());
+//     return false;
+//   }
+// }
 }

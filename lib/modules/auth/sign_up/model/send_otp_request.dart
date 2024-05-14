@@ -3,22 +3,25 @@ class SendOtpRequest {
     this.mobileNumber,
     this.type,
     this.countryCode,
-    // this.status,
+    this.message,
+    this.status,
   });
 
   SendOtpRequest.fromJson(dynamic json) {
     mobileNumber = json['mobile_number'];
     type = json['type'];
     countryCode = json['country_code'];
-    // status = json['status'];
+    message = json['message'];
+    status = json['status'];
     // code = json['code'];
   }
 
   String? mobileNumber;
   String? type;
   String? countryCode;
+  String? message;
+  String? status;
 
-  // String? status;
   // String? code;
 
   Map<String, dynamic> toJson() {
@@ -26,6 +29,7 @@ class SendOtpRequest {
     data['country_code'] = countryCode;
     data['type'] = type;
     data['mobile_number'] = mobileNumber;
+    // data['message'] = message;
     // data['status'] = status;
     // data['code'] = code;
     return data;

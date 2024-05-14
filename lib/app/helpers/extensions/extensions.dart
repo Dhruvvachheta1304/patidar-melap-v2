@@ -47,15 +47,15 @@ extension IntX on int {
 
 extension GetUserDataExtension on BuildContext {
   String get username => getIt<IAuthService>().getUserData().fold<String>(
-        (_) => '',
+        (error) => '',
         (model) => model[0].name,
       );
 }
 
 extension GetUsernameExtension on NavigationResolver {
-  bool get isLoggedIn => getIt<IAuthService>().getUserData().fold<bool>(
-        (_) => false,
-        (model) => true,
+  bool get isLoggedIn => getIt<IAuthService>().getAccessToken().fold<bool>(
+        () => false,
+        (token) => true,
       );
 }
 

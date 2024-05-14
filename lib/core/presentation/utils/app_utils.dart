@@ -10,7 +10,7 @@ class AppUtils {
   static BehaviorSubject<bool> permissionStream = BehaviorSubject<bool>.seeded(false);
   static BehaviorSubject<bool> isMockLocationStream = BehaviorSubject<bool>.seeded(false);
 
-  static void showSnackBar(BuildContext? context, String? text, {bool? isError = false}) {
+  static void showSnackBar(BuildContext? context, String? text, {bool? isError = false, bool? isTop = false}) {
     if (context != null) {
       final snackBar = SnackBar(
         dismissDirection: DismissDirection.startToEnd,
@@ -21,11 +21,13 @@ class AppUtils {
           fontSize: 16,
           maxLines: 3,
         ),
-        behavior: SnackBarBehavior.fixed,
-        // margin: const EdgeInsets.only(
-        //   //bottom: MediaQuery.of(context).size.height - 90,
-        //   top: 10,
-        // ),
+        behavior: SnackBarBehavior.floating,
+        // behavior: isTop ?? false ? SnackBarBehavior.floating : SnackBarBehavior.fixed,
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.height - 100,
+          right: 20,
+          left: 20,
+        ),
         duration: const Duration(seconds: 2),
       );
 

@@ -54,7 +54,7 @@ final class ApiClient {
   );
 
   static void setAuthorizationToken(String token) {
-    dio.options.headers = {'Authorization': 'Bearer $token'};
+    dio.options.headers = {'Authorization': token};
   }
 
   /// With this function, users can make GET, POST, PUT, DELETE request using

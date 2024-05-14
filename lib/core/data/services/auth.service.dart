@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:patidar_melap_app/app/enum.dart';
 import 'package:patidar_melap_app/core/data/models/user_model.dart';
 import 'package:patidar_melap_app/core/domain/failure.dart';
@@ -18,9 +17,13 @@ abstract interface class IAuthService {
   /// This function is used for setting the access token that a user gets from
   /// the API and store it in the local database.
   TaskEither<Failure, Unit> setAccessToken(String accessToken);
+
   TaskEither<Failure, Unit> setUserData(UserModel userModel);
+
   Option<String> getAccessToken();
+
   Task<Unit> clearData();
+
   Either<Failure, List<UserModel>> getUserData();
 }
 
@@ -105,10 +108,13 @@ final class AuthService implements IAuthService {
   @override
   Task<Unit> clearData() => Task(
         () async {
-          await Hive.deleteFromDisk();
-
-          /// To re-open the boxes after closing it
-          await init();
+          // await Hive.deleteFromDisk();
+          //
+          // /// To re-open the boxes after closing it
+          // await init();
+          // return unit;
+          await Hive.box<String>(HiveKeys.userToken.value).clear();
+          await Hive.box<UserModel>(HiveKeys.userData.value).clear();
           return unit;
         },
       );

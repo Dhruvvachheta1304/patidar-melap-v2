@@ -43,22 +43,23 @@ class LoginResponse {
 }
 
 class UserData {
-  UserData(
-      {this.id,
-      this.matriId,
-      this.indexNumber,
-      this.status,
-      this.email,
-      this.username,
-      this.planName,
-      this.planStatus,
-      this.mobile,
-      this.mobileVerifyStatus,
-      this.loggedIn,
-      this.basicDetailCompleted,
-      this.familyDetailCompleted,
-      this.otherDetailCompleted,
-      this.photosCompleted});
+  UserData({
+    this.id,
+    this.matriId,
+    this.indexNumber,
+    this.status,
+    this.email,
+    this.username,
+    this.planName,
+    this.planStatus,
+    this.mobile,
+    this.mobileVerifyStatus,
+    this.loggedIn,
+    this.basicDetailCompleted,
+    this.familyDetailCompleted,
+    this.otherDetailCompleted,
+    this.photosCompleted,
+  });
 
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -5,7 +5,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:patidar_melap_app/app/enum.dart';
 import 'package:patidar_melap_app/app/helpers/extensions/extensions.dart';
 import 'package:patidar_melap_app/app/routes/app_router.dart';
@@ -58,6 +58,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   CountryCode? countryCode = CountryCode(dialCode: '+91');
 
+  late bool? isEnabled;
+
   @override
   void didChangeDependencies() {
     signUpBloc = context.read<SignUpBloc>();
@@ -81,39 +83,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 padding: const EdgeInsets.all(18),
                 child: BlocConsumer<SignUpBloc, SignUpState>(
                   listener: (context, state) {
-                    if (state is SendOtpState && state.status == ApiStatus.loaded) {
+                    if (state is SendOtpState && state.responseModel?.status == 'success') {
                       AppUtils.showSnackBar(
                         context,
-                        state.responseModel?.type,
+                        LocaleKeys.otp_msg_success.tr(),
+                        // isError: true,
                       );
+                      _showOtpBottomSheet(context);
                     }
 
-                    if (state is SendOtpState && state.status == ApiStatus.error) {
+                    if (state is SendOtpState && state.responseModel?.status == 'error') {
+                      log('Error message: ${state.responseModel?.message}');
                       AppUtils.showSnackBar(
                         context,
-                        state.errorMsg,
+                        state.responseModel?.message,
                         isError: true,
                       );
                     }
-                    if (state is RegisterState) {
-                      if (state.status == ApiStatus.loaded) {
-                        AppUtils.showSnackBar(
-                          context,
-                          LocaleKeys.sign_up_done.tr(),
-                        );
-                        context.router.pushAndPopUntil(
-                          const ProfileRoute(),
-                          predicate: (_) => false,
-                        );
-                      }
 
-                      if (state.status == ApiStatus.error) {
-                        AppUtils.showSnackBar(
-                          context,
-                          state.errorMsg,
-                          isError: true,
-                        );
-                      }
+                    if (state is RegisterState && state.status == ApiStatus.loading) {
+                      isEnabled = false;
+                    }
+
+                    if (state is RegisterState && state.responseModel?.status == 'success') {
+                      AppUtils.showSnackBar(
+                        context,
+                        LocaleKeys.sign_up_done.tr(),
+                      );
+                      context.router.pushAndPopUntil(
+                        const ProfileRoute(),
+                        predicate: (_) => false,
+                      );
+                    }
+
+                    if (state is RegisterState && state.responseModel?.status == 'error') {
+                      // FocusScope.of(context).requestFocus(FocusNode());
+                      // Navigator.pop(context);
+                      AppUtils.showSnackBar(
+                        isTop: true,
+                        context,
+                        state.responseModel?.message,
+                        isError: true,
+                      );
                     }
                   },
                   builder: (context, state) {
@@ -262,20 +273,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onPressed: () {
                             // onRegisterPressed(context);
                             // _sendOtp();
-                            FocusScope.of(context).requestFocus(FocusNode());
 
+                            FocusScope.of(context).requestFocus(FocusNode());
                             if (signUpBloc.formKey.currentState!.validate()) {
-                              // if (state is SendOtpState && state.status == ApiStatus.loaded) {
-                              //   _showOtpBottomSheet(context);
-                              //   _sendOtp();
-                              // }
-                              if (state is SendOtpState && state.status == ApiStatus.error) {
-                                AppUtils.showSnackBar(
-                                  context,
-                                  state.errorMsg,
-                                );
-                              }
+                              _sendOtp();
                             }
+
+                            /////
 
                             // _showOtpBottomSheet(context);
                           },
@@ -345,6 +349,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       context: context,
       backgroundColor: context.colorScheme.white,
       showDragHandle: true,
+      barrierColor: context.colorScheme.transparent,
       elevation: 10,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -374,7 +379,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     VSpace.xsmall(),
                     AppText.muktaVaani(
                       LocaleKeys.otp_hint_text.tr(),
-                      fontSize: 16,
                       color: context.colorScheme.grey400,
                     ),
                     VSpace.xlarge(),
@@ -411,7 +415,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 AppButton(
                   text: LocaleKeys.continue_title.tr(),
                   // isEnabled: state is SendOtpState && state.status == ApiStatus.loading ? false : true,
+                  // isEnabled: isEnabled == false ? false : true,
                   isEnabled: true,
+                  // isEnabled: !(context.watch<SignUpBloc>().state is SendOtpState && context.watch<SignUpBloc>().state),
                   onPressed: () {
                     if (signUpBloc.otpFormKey.currentState!.validate()) {
                       _signUp();
