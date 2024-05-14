@@ -6,7 +6,11 @@ abstract class CasteState {
 }
 
 class FetchCasteState extends CasteState {
-  const FetchCasteState({this.status = ApiStatus.initial, this.errorMsg, this.responseModel});
+  const FetchCasteState({
+    this.status = ApiStatus.initial,
+    this.errorMsg,
+    this.responseModel,
+  });
 
   final ApiStatus status;
   final String? errorMsg;

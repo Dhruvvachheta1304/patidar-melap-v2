@@ -1,6 +1,10 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:patidar_melap_app/app/helpers/injection.dart';
+import 'package:patidar_melap_app/app/routes/app_router.dart';
+import 'package:patidar_melap_app/modules/auth/repository/auth_repository.dart';
 import 'package:patidar_melap_app/modules/auth/sign_in/model/login_reponse.dart';
 
 /// Here, we're creating an abstract class for Faliure, Because
@@ -30,6 +34,19 @@ class APIFailure extends Failure {
         /// Here, [message] is the key in which we're getting the
         /// error message from the API call
         final exception = error! as DioException?;
+
+        if (exception?.response?.statusCode == 401) {
+          getIt<IAuthRepository>().logout();
+          try {
+            getIt<AppRouter>().pushAndPopUntil(
+              const LoginRoute(),
+              predicate: (_) => false,
+            );
+          } catch (e) {
+            debugPrint('error on unAuthenticate $e');
+          }
+        }
+
         if (exception?.response?.data is Map<String, dynamic>) {
           // ignore: avoid_dynamic_calls
           errorMessage = (exception?.response?.data['message'] != null)

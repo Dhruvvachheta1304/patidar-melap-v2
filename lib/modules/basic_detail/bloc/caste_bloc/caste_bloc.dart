@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +22,7 @@ class CasteBloc extends Bloc<CasteEvent, CasteState> {
   String? casteId;
   String? subCasteId;
   int? sataPetaId;
-  String? selectedImagePath = '';
-  File? selectedImage;
+  String? genderId;
 
   final formKey = GlobalKey<FormState>();
 
