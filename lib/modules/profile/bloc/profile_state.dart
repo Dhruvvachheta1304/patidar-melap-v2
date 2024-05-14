@@ -1,10 +1,18 @@
 part of 'profile_bloc.dart';
 
-abstract class ProfileState extends Equatable {
-  const ProfileState();
-  
-  @override
-  List<Object> get props => [];
+@immutable
+abstract class ProfileState {}
+
+class FetchProfileState extends ProfileState {
+  FetchProfileState({
+    this.status = ApiStatus.initial,
+    this.errorMsg,
+    this.responseModel,
+  });
+
+  final ApiStatus status;
+  final String? errorMsg;
+  final UserDataModel? responseModel;
 }
 
-class ProfileInitial extends ProfileState {}
+final class UserDataInitial extends ProfileState {}

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:patidar_melap_app/app/helpers/extensions/extensions.dart';
 import 'package:patidar_melap_app/app/theme/text.dart';
 
 class CustomProfileTabs extends StatefulWidget {
@@ -30,8 +31,8 @@ class _CustomProfileTabsState extends State<CustomProfileTabs> {
                 )
               : LinearGradient(
                   colors: [
-                    Colors.grey,
-                    Colors.grey.shade600,
+                    context.colorScheme.grey100,
+                    context.colorScheme.grey100,
                   ],
                 ),
         ),
@@ -53,13 +54,14 @@ class _CustomProfileTabsState extends State<CustomProfileTabs> {
             ),
             borderRadius: BorderRadius.circular(15),
           ),
-          trailing: const Icon(
+          trailing: Icon(
             CupertinoIcons.right_chevron,
-            color: Colors.white,
+            color: widget.disableColor! ? context.colorScheme.white : context.colorScheme.black,
             size: 25,
           ),
           title: AppText.muktaVaani(
             widget.text ?? '',
+            color: widget.disableColor! ? context.colorScheme.white : context.colorScheme.black,
           ),
         ),
       ),
